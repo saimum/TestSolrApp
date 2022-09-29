@@ -97,7 +97,7 @@ namespace TestSolrApp.Controllers
             list.Add(new SearchResultModel() { ResultType = "District", ResultTitle = "Sylhet" });
             list.Add(new SearchResultModel() { ResultType = "District", ResultTitle = "Tangail" });
 
-            return Json(list);
+            return Json(list.Where(m => m.ResultTitle.Contains(keyword)).Select(m => m.ResultTitle).ToList());
         }
 
         class SearchResultModel
