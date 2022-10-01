@@ -1,65 +1,71 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>jQuery UI Autocomplete - Remote JSONP datasource</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <style>
-        .ui-autocomplete-loading {
-            background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <title>jQuery UI autocomplete with PHP and AJAX</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 </head>
 <body>
 
-    <div class="ui-widget">
-        <label for="city">Your city: </label>
-        <input id="city">
-        Powered by <a href="http://geonames.org">geonames.org</a>
-    </div>
+    <table>
+        <tr>
+            <td>Single selection</td>
+            <td><input type='text' id='autocomplete'></td>
+        </tr>
 
-    <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        Result:
-        <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
-    </div>
-    <script>
+        <tr>
+            <td>Selected User id</td>
+            <td><input type='text' id='selectuser_id' /></td>
+        </tr>
+
+
+    </table>
+
+    <!-- Script -->
+    <script type='text/javascript'>
         $(function () {
-            function log(message) {
-                $("<div>").text(message).prependTo("#log");
-                $("#log").scrollTop(0);
-            }
 
-            $("#city").autocomplete({
+            $("#autocomplete").autocomplete({
                 source: function (request, response) {
+
                     $.ajax({
-                        url: "http://gd.geobytes.com/AutoCompleteCity",
-                        dataType: "jsonp",
+                        url: "/Home/GetSeachedData",
+                        type: 'post',
+                        dataType: "json",
                         data: {
-                            q: request.term
+                            keyword: request.term
                         },
                         success: function (data) {
                             response(data);
                         }
                     });
                 },
-                minLength: 3,
                 select: function (event, ui) {
-                    log(ui.item ?
-                        "Selected: " + ui.item.label :
-                        "Nothing selected, input was " + this.value);
+                    $('#autocomplete').val(ui.item.label); // display the selected text
+                    $('#selectuser_id').val(ui.item.value); // save selected id to input
+                    return false;
                 },
-                open: function () {
-                    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+                focus: function (event, ui) {
+                    $("#autocomplete").val(ui.item.label);
+                    $("#selectuser_id").val(ui.item.value);
+                    return false;
                 },
-                close: function () {
-                    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-                }
             });
+
         });
+
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
     </script>
+
 </body>
 </html>
