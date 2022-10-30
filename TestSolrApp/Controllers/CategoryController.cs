@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SolrManager.SolrManagers;
+using SolrManager.SolrModels;
 using TestSolrApp.DBModels;
 
 namespace TestSolrApp.Controllers
@@ -21,7 +23,7 @@ namespace TestSolrApp.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
-              return View(await _context.CategoryTable.ToListAsync());
+            return View(await _context.CategoryTable.ToListAsync());
         }
 
         // GET: Category/Details/5
@@ -59,6 +61,11 @@ namespace TestSolrApp.Controllers
             {
                 _context.Add(categoryTable);
                 await _context.SaveChangesAsync();
+                SolrCategoryManager.Add(new CategoryCore
+                {
+                    CategoryId = categoryTable.CategoryId,
+                    CategoryName = categoryTable.CategoryName,
+                });
                 return RedirectToAction(nameof(Index));
             }
             return View(categoryTable);
@@ -98,6 +105,11 @@ namespace TestSolrApp.Controllers
                 {
                     _context.Update(categoryTable);
                     await _context.SaveChangesAsync();
+                    SolrCategoryManager.Add(new CategoryCore
+                    {
+                        CategoryId = categoryTable.CategoryId,
+                        CategoryName = categoryTable.CategoryName,
+                    });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,15 +158,20 @@ namespace TestSolrApp.Controllers
             if (categoryTable != null)
             {
                 _context.CategoryTable.Remove(categoryTable);
+                SolrCategoryManager.Remove(new CategoryCore
+                {
+                    CategoryId = categoryTable.CategoryId,
+                    CategoryName = categoryTable.CategoryName,
+                });
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryTableExists(long id)
         {
-          return _context.CategoryTable.Any(e => e.CategoryId == id);
+            return _context.CategoryTable.Any(e => e.CategoryId == id);
         }
     }
 }

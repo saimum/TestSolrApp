@@ -20,4 +20,8 @@
     <Folder Include="DBModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SolrManager\SolrManager.csproj" />
+  </ItemGroup>
+
 </Project>

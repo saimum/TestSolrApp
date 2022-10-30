@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SolrManager.SolrManagers;
+using SolrManager.SolrModels;
 using TestSolrApp.DBModels;
 
 namespace TestSolrApp.Controllers
@@ -62,6 +64,12 @@ namespace TestSolrApp.Controllers
             {
                 _context.Add(itemTable);
                 await _context.SaveChangesAsync();
+                SolrItemManager.Add(new ItemCore
+                {
+                    ItemId = itemTable.ItemId,
+                    ItemName = itemTable.ItemName,
+                    SubCategoryId = itemTable.SubCategoryId
+                });
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SubCategoryId"] = new SelectList(_context.SubCategoryTable, "SubCategoryId", "SubCategoryName", itemTable.SubCategoryId);
@@ -103,6 +111,12 @@ namespace TestSolrApp.Controllers
                 {
                     _context.Update(itemTable);
                     await _context.SaveChangesAsync();
+                    SolrItemManager.Add(new ItemCore
+                    {
+                        ItemId = itemTable.ItemId,
+                        ItemName = itemTable.ItemName,
+                        SubCategoryId = itemTable.SubCategoryId
+                    });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -153,6 +167,12 @@ namespace TestSolrApp.Controllers
             if (itemTable != null)
             {
                 _context.ItemTable.Remove(itemTable);
+                SolrItemManager.Remove(new ItemCore
+                {
+                    ItemId = itemTable.ItemId,
+                    ItemName = itemTable.ItemName,
+                    SubCategoryId = itemTable.SubCategoryId
+                });
             }
             
             await _context.SaveChangesAsync();

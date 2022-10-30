@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SolrManager.SolrManagers;
+using SolrManager.SolrModels;
 using TestSolrApp.DBModels;
 
 namespace TestSolrApp.Controllers
@@ -64,6 +66,12 @@ namespace TestSolrApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            SolrSubCategoryManager.Add(new SubCategoryCore
+            {
+                SubCategoryId = subCategoryTable.SubCategoryId,
+                SubCategoryName = subCategoryTable.SubCategoryName,
+                CategoryId = subCategoryTable.CategoryId
+            });
             ViewData["CategoryId"] = new SelectList(_context.CategoryTable, "CategoryId", "CategoryName", subCategoryTable.CategoryId);
             return View(subCategoryTable);
         }
@@ -103,6 +111,12 @@ namespace TestSolrApp.Controllers
                 {
                     _context.Update(subCategoryTable);
                     await _context.SaveChangesAsync();
+                    SolrSubCategoryManager.Add(new SubCategoryCore
+                    {
+                        SubCategoryId = subCategoryTable.SubCategoryId,
+                        SubCategoryName = subCategoryTable.SubCategoryName,
+                        CategoryId = subCategoryTable.CategoryId
+                    });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -153,6 +167,12 @@ namespace TestSolrApp.Controllers
             if (subCategoryTable != null)
             {
                 _context.SubCategoryTable.Remove(subCategoryTable);
+                SolrSubCategoryManager.Remove(new SubCategoryCore
+                {
+                    SubCategoryId = subCategoryTable.SubCategoryId,
+                    SubCategoryName = subCategoryTable.SubCategoryName,
+                    CategoryId = subCategoryTable.CategoryId
+                });
             }
             
             await _context.SaveChangesAsync();
