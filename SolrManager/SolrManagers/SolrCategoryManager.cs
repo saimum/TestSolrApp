@@ -43,5 +43,22 @@ namespace SolrManager.SolrManagers
             }
             return res;
         }
+
+        public static string Remove(CategoryCore core)
+        {
+            var res = "";
+            try
+            {
+                Startup.Init<CategoryCore>("http://localhost:8983/solr/CategoryCore");
+                ISolrOperations<CategoryCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<CategoryCore>>();
+                solr.Delete(core);
+                res = solr.Commit().ToString();
+            }
+            catch (Exception e)
+            {
+                res = e.Message;
+            }
+            return res;
+        }
     }
 }
