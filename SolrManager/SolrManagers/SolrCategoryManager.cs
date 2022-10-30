@@ -4,6 +4,7 @@ using SolrNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,6 +54,22 @@ namespace SolrManager.SolrManagers
                 ISolrOperations<CategoryCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<CategoryCore>>();
                 solr.Delete(core);
                 res = solr.Commit().ToString();
+            }
+            catch (Exception e)
+            {
+                res = e.Message;
+            }
+            return res;
+        }
+
+        public static string RemoveAll()
+        {
+            var res = "";
+            try
+            {
+                var coreName = "CategoryCore";
+                var url = @"http://localhost:8983/solr/" + coreName + @"/update?stream.body=<delete><query>*:*</query></delete>&commit=true";
+                res = new WebClient().DownloadString(url);
             }
             catch (Exception e)
             {
