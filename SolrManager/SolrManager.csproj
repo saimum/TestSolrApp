@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\TestSolrApp\LibraryFiles\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.SolrNetIntegration">
+      <HintPath>..\TestSolrApp\LibraryFiles\Castle.Facilities.SolrNetIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\TestSolrApp\LibraryFiles\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpWebAdapters">
+      <HintPath>..\TestSolrApp\LibraryFiles\HttpWebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\TestSolrApp\LibraryFiles\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\TestSolrApp\LibraryFiles\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\TestSolrApp\LibraryFiles\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SolrNet">
+      <HintPath>..\TestSolrApp\LibraryFiles\SolrNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SolrNet.DSL">
+      <HintPath>..\TestSolrApp\LibraryFiles\SolrNet.DSL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
