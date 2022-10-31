@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Folder Include="DBModels\" />
+    <Folder Include="SolrResponceModels\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
