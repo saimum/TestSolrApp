@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace SolrManager.SolrModels
 {
-    public class CategoryCore
+    public class ProductCore
     {
         [SolrUniqueKey("Id")]
-        public long Id { get; set; }
-        
+        public int Id { get; set; }
+
         [SolrField("Name")]
         public string Name { get; set; }
+
+        //public bool Deleted { get; set; }
+        //public DateTime UpdatedOnUtc { get; set; }
     }
 }

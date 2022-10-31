@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace SolrManager.SolrManagers
 {
-    public static class SolrCategoryManager
+    public static class ProductCoreManager
     {
-        public static string Add(CategoryCore core)
+        public static string Add(ProductCore core)
         {
             var res = "";
             try
             {
-                Startup.Init<CategoryCore>("http://localhost:8983/solr/CategoryCore");
-                ISolrOperations<CategoryCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<CategoryCore>>();
+                Startup.Init<ProductCore>("http://localhost:8983/solr/ProductCore");
+                ISolrOperations<ProductCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<ProductCore>>();
                 solr.Add(core);
                 res = solr.Commit().ToString();
             }
@@ -28,13 +28,13 @@ namespace SolrManager.SolrManagers
             }
             return res;
         }
-        public static string AddRange(List<CategoryCore> cores)
+        public static string AddRange(List<ProductCore> cores)
         {
             var res = "";
             try
             {
-                Startup.Init<CategoryCore>("http://localhost:8983/solr/CategoryCore");
-                ISolrOperations<CategoryCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<CategoryCore>>();
+                Startup.Init<ProductCore>("http://localhost:8983/solr/ProductCore");
+                ISolrOperations<ProductCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<ProductCore>>();
                 solr.AddRange(cores);
                 res = solr.Commit().ToString();
             }
@@ -45,13 +45,13 @@ namespace SolrManager.SolrManagers
             return res;
         }
 
-        public static string Remove(CategoryCore core)
+        public static string Remove(ProductCore core)
         {
             var res = "";
             try
             {
-                Startup.Init<CategoryCore>("http://localhost:8983/solr/CategoryCore");
-                ISolrOperations<CategoryCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<CategoryCore>>();
+                Startup.Init<ProductCore>("http://localhost:8983/solr/ProductCore");
+                ISolrOperations<ProductCore> solr = ServiceLocator.Current.GetInstance<ISolrOperations<ProductCore>>();
                 solr.Delete(core);
                 res = solr.Commit().ToString();
             }
@@ -67,7 +67,7 @@ namespace SolrManager.SolrManagers
             var res = "";
             try
             {
-                var coreName = "CategoryCore";
+                var coreName = "ProductCore";
                 var url = @"http://localhost:8983/solr/" + coreName + @"/update?stream.body=<delete><query>*:*</query></delete>&commit=true";
                 res = new WebClient().DownloadString(url);
             }

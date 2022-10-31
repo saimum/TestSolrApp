@@ -33,7 +33,7 @@ Console.WriteLine("Bismillah");
 //SolrCategoryManager.Remove(deleteCore);
 
 ////Delete all document
-SolrCategoryManager.RemoveAll();
+CategoryCoreManager.RemoveAll();
 
 
 Console.ReadKey();

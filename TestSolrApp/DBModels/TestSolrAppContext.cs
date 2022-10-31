@@ -18,9 +18,9 @@ namespace TestSolrApp.DBModels
         {
         }
 
-        public virtual DbSet<CategoryTable> CategoryTable { get; set; }
-        public virtual DbSet<ItemTable> ItemTable { get; set; }
-        public virtual DbSet<SubCategoryTable> SubCategoryTable { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductCategoryMapping> ProductCategoryMapping { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,60 +33,53 @@ namespace TestSolrApp.DBModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CategoryTable>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasKey(e => e.CategoryId)
-                    .HasName("PK_CategoryModel");
+                entity.HasNoKey();
 
-                entity.Property(e => e.CategoryName)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                entity.Property(e => e.AvailablePaymentMethod)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.MetaKeywords).HasMaxLength(400);
+
+                entity.Property(e => e.MetaTitle).HasMaxLength(400);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(400);
+
+                entity.Property(e => e.PageSizeOptions).HasMaxLength(200);
+
+                entity.Property(e => e.PriceFrom).HasColumnType("decimal(19, 5)");
+
+                entity.Property(e => e.PriceTo).HasColumnType("decimal(19, 5)");
             });
 
-            modelBuilder.Entity<ItemTable>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasKey(e => e.ItemId);
+                entity.HasNoKey();
 
-                entity.Property(e => e.ItemName)
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.MetaKeywords).HasMaxLength(400);
+
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.SubCategory)
-                    .WithMany(p => p.ItemTable)
-                    .HasForeignKey(d => d.SubCategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ItemTable_SubCategoryTable");
+                    .HasMaxLength(400);
             });
 
-            modelBuilder.Entity<SubCategoryTable>(entity =>
+            modelBuilder.Entity<ProductCategoryMapping>(entity =>
             {
-                entity.HasKey(e => e.SubCategoryId)
-                    .HasName("PK_SubCategory");
+                entity.HasNoKey();
 
-                entity.Property(e => e.SubCategoryName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.ToTable("Product_Category_Mapping");
 
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.SubCategoryTable)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SubCategoryTable_CategoryTable");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             OnModelCreatingPartial(modelBuilder);

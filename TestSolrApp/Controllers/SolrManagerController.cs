@@ -17,41 +17,29 @@ namespace TestSolrApp.Controllers
         {
             var dateTimeLowerLimit = DateTime.Now.AddMinutes(-5);
 
-            var categoryTables = _context.CategoryTable.Where(a => a.UpdatedAt > dateTimeLowerLimit).ToList();
+            var categoryTables = _context.Category.Where(a => a.UpdatedOnUtc > dateTimeLowerLimit).ToList();
             List<CategoryCore> categoryCores = new List<CategoryCore>();
-            foreach (var categoryTable in categoryTables)
+            foreach (var Category in categoryTables)
             {
                 categoryCores.Add(new CategoryCore {
-                    CategoryId = categoryTable.CategoryId,
-                    CategoryName = categoryTable.CategoryName,
+                    Id = Category.Id,
+                    Name = Category.Name,
                 });
             }
-            SolrCategoryManager.AddRange(categoryCores);
+            CategoryCoreManager.AddRange(categoryCores);
 
-            var subCategoryTables = _context.SubCategoryTable.Where(a => a.UpdatedAt > dateTimeLowerLimit).ToList();
-            List<SubCategoryCore> subCategoryCores = new List<SubCategoryCore>();
-            foreach (var subCategoryTable in subCategoryTables)
-            {
-                subCategoryCores.Add(new SubCategoryCore
-                {
-                    SubCategoryId = subCategoryTable.SubCategoryId,
-                    SubCategoryName = subCategoryTable.SubCategoryName,
-                    CategoryId = subCategoryTable.CategoryId
-                });
-            }
-            SolrSubCategoryManager.AddRange(subCategoryCores);
 
-            var itemTables = _context.ItemTable.Where(a => a.UpdatedAt > dateTimeLowerLimit).ToList();
-            List<ItemCore> itemCores = new List<ItemCore>();
-            foreach (var itemTable in itemTables)
+            var productTables = _context.Product.Where(a => a.UpdatedOnUtc > dateTimeLowerLimit).ToList();
+            List<ProductCore> productCores = new List<ProductCore>();
+            foreach (var productTable in productTables)
             {
-                itemCores.Add(new ItemCore
+                productCores.Add(new ProductCore
                 {
-                    ItemId = itemTable.ItemId,
-                    ItemName = itemTable.ItemName,
+                    Id = productTable.Id,
+                    Name = productTable.Name,
                 });
             }
-            SolrItemManager.AddRange(itemCores);
+            ProductCoreManager.AddRange(productCores);
 
             return View();
         }

@@ -11,90 +11,92 @@ using TestSolrApp.DBModels;
 
 namespace TestSolrApp.Controllers
 {
-    public class CategoryController : Controller
+    public class productController : Controller
     {
         private readonly TestSolrAppContext _context;
 
-        public CategoryController(TestSolrAppContext context)
+        public productController(TestSolrAppContext context)
         {
             _context = context;
         }
 
-        // GET: Category
+        // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            var testSolrAppContext = _context.Product;
+            return View(await testSolrAppContext.ToListAsync());
         }
 
-        // GET: Category/Details/5
+        // GET: Product/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Product == null)
             {
                 return NotFound();
             }
 
-            var Category = await _context.Category
+            var Product = await _context.Product
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (Category == null)
+            if (Product == null)
             {
                 return NotFound();
             }
 
-            return View(Category);
+            return View(Product);
         }
 
-        // GET: Category/Create
+        // GET: Product/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Category/Create
+        // POST: Product/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UpdatedAt")] Category Category)
+        public async Task<IActionResult> Create([Bind("Id,ProductName")] Product Product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(Category);
+                _context.Add(Product);
                 await _context.SaveChangesAsync();
-                CategoryCoreManager.Add(new CategoryCore
+                ProductCoreManager.Add(new ProductCore
                 {
-                    Id = Category.Id,
-                    Name = Category.Name,
+                    Id = Product.Id,
+                    Name = Product.Name
                 });
                 return RedirectToAction(nameof(Index));
             }
-            return View(Category);
+            return View(Product);
         }
 
-        // GET: Category/Edit/5
+        // GET: Product/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Product == null)
             {
                 return NotFound();
             }
 
-            var Category = await _context.Category.FindAsync(id);
-            if (Category == null)
+            var Product = await _context.Product.FindAsync(id);
+            if (Product == null)
             {
                 return NotFound();
             }
-            return View(Category);
+            return View(Product);
         }
 
-        // POST: Category/Edit/5
+        // POST: Product/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,UpdatedAt")] Category Category)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,ProductName")] Product Product)
         {
-            if (id != Category.Id)
+            if (id != Product.Id)
             {
                 return NotFound();
             }
@@ -103,17 +105,17 @@ namespace TestSolrApp.Controllers
             {
                 try
                 {
-                    _context.Update(Category);
+                    _context.Update(Product);
                     await _context.SaveChangesAsync();
-                    CategoryCoreManager.Add(new CategoryCore
+                    ProductCoreManager.Add(new ProductCore
                     {
-                        Id = Category.Id,
-                        Name = Category.Name,
+                        Id = Product.Id,
+                        Name = Product.Name,
                     });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(Category.Id))
+                    if (!ProductExists(Product.Id))
                     {
                         return NotFound();
                     }
@@ -124,44 +126,45 @@ namespace TestSolrApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(Category);
+            return View(Product);
         }
 
-        // GET: Category/Delete/5
+        // GET: Product/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Product == null)
             {
                 return NotFound();
             }
 
-            var Category = await _context.Category
+            var Product = await _context.Product
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (Category == null)
+            if (Product == null)
             {
                 return NotFound();
             }
 
-            return View(Category);
+            return View(Product);
         }
 
-        // POST: Category/Delete/5
+        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.Category == null)
+            if (_context.Product == null)
             {
-                return Problem("Entity set 'TestSolrAppContext.Category'  is null.");
+                return Problem("Entity set 'TestSolrAppContext.Product'  is null.");
             }
-            var Category = await _context.Category.FindAsync(id);
-            if (Category != null)
+            var Product = await _context.Product.FindAsync(id);
+            if (Product != null)
             {
-                _context.Category.Remove(Category);
-                CategoryCoreManager.Remove(new CategoryCore
+                _context.Product.Remove(Product);
+                ProductCoreManager.Remove(new ProductCore
                 {
-                    Id = Category.Id,
-                    Name = Category.Name,
+                    Id = Product.Id,
+                    Name = Product.Name,
                 });
             }
 
@@ -169,9 +172,9 @@ namespace TestSolrApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(long id)
+        private bool ProductExists(long id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.Product.Any(e => e.Id == id);
         }
     }
 }

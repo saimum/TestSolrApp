@@ -15,15 +15,15 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
-         "Name": "[dbo].[CategoryTable]",
+         "Name": "[dbo].[Category]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ItemTable]",
+         "Name": "[dbo].[Product]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[SubCategoryTable]",
+         "Name": "[dbo].[Product_Category_Mapping]",
          "ObjectType": 0
       }
    ],
