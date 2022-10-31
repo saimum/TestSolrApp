@@ -109,6 +109,7 @@ namespace TestSolrApp.Controllers
             {
                 try
                 {
+                    subCategoryTable.UpdatedAt = DateTime.Now;
                     _context.Update(subCategoryTable);
                     await _context.SaveChangesAsync();
                     SolrSubCategoryManager.Add(new SubCategoryCore

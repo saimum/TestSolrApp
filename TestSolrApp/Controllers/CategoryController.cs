@@ -103,6 +103,7 @@ namespace TestSolrApp.Controllers
             {
                 try
                 {
+                    categoryTable.UpdatedAt = DateTime.Now;
                     _context.Update(categoryTable);
                     await _context.SaveChangesAsync();
                     SolrCategoryManager.Add(new CategoryCore

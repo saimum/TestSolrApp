@@ -109,6 +109,7 @@ namespace TestSolrApp.Controllers
             {
                 try
                 {
+                    itemTable.UpdatedAt = DateTime.Now;
                     _context.Update(itemTable);
                     await _context.SaveChangesAsync();
                     SolrItemManager.Add(new ItemCore
@@ -174,14 +175,14 @@ namespace TestSolrApp.Controllers
                     SubCategoryId = itemTable.SubCategoryId
                 });
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItemTableExists(long id)
         {
-          return _context.ItemTable.Any(e => e.ItemId == id);
+            return _context.ItemTable.Any(e => e.ItemId == id);
         }
     }
 }
