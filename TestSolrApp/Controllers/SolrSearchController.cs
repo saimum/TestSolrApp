@@ -20,7 +20,7 @@ namespace TestSolrApp.Controllers
 
 
                 //# Get Product
-                List<ProductCoreResponseTemplate.Doc> products = new List<ProductCoreResponseTemplate.Doc>();
+                List<ProductCoreResponseTemplate.Doc> Products = new List<ProductCoreResponseTemplate.Doc>();
                 {
                     HttpResponseMessage response = await client.GetAsync("ProductCore/select?q=*:*&rows=5&wt=json&indent=true");
                     if (response.IsSuccessStatusCode)
@@ -28,13 +28,13 @@ namespace TestSolrApp.Controllers
                         var responseModel = await response.Content.ReadFromJsonAsync<ProductCoreResponseTemplate.Rootobject>();
                         if (responseModel != null)
                         {
-                            products = responseModel.response.docs;
+                            Products = responseModel.response.docs;
                         }
                     }
                 }
 
                 //# Get Category
-                List<CategoryCoreResponseTemplate.Doc> categories = new List<CategoryCoreResponseTemplate.Doc>();
+                List<CategoryCoreResponseTemplate.Doc> Categories = new List<CategoryCoreResponseTemplate.Doc>();
                 {
                     HttpResponseMessage response = await client.GetAsync("CategoryCore/select?q=*:*&rows=5&wt=json&indent=true");
                     if (response.IsSuccessStatusCode)
@@ -42,12 +42,12 @@ namespace TestSolrApp.Controllers
                         var responseModel = await response.Content.ReadFromJsonAsync<CategoryCoreResponseTemplate.Rootobject>();
                         if (responseModel != null)
                         {
-                            categories = responseModel.response.docs;
+                            Categories = responseModel.response.docs;
                         }
                     }
                 }
 
-                return Json(new { success = true, products = products, categories = categories });
+                return Json(new { success = true, products = Products, categories = Categories });
 
             }
         }
