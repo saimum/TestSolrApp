@@ -35,13 +35,9 @@ namespace TestSolrApp.DBModels
         {
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.Property(e => e.AvailablePaymentMethod)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.MetaKeywords).HasMaxLength(400);
 
@@ -60,11 +56,7 @@ namespace TestSolrApp.DBModels
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.MetaKeywords).HasMaxLength(400);
 
@@ -75,11 +67,7 @@ namespace TestSolrApp.DBModels
 
             modelBuilder.Entity<ProductCategoryMapping>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Product_Category_Mapping");
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             OnModelCreatingPartial(modelBuilder);

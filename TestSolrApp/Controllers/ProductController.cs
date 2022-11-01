@@ -28,7 +28,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Product/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Product == null)
             {
@@ -57,7 +57,7 @@ namespace TestSolrApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName")] Product Product)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Product Product)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Product/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Product == null)
             {
@@ -94,7 +94,7 @@ namespace TestSolrApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,ProductName")] Product Product)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Product Product)
         {
             if (id != Product.Id)
             {
@@ -130,7 +130,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Product/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Product == null)
             {

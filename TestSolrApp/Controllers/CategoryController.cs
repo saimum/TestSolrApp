@@ -27,7 +27,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Category/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Category == null)
             {
@@ -55,7 +55,7 @@ namespace TestSolrApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UpdatedAt")] Category Category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Category Category)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Category/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Category == null)
             {
@@ -92,7 +92,7 @@ namespace TestSolrApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,UpdatedAt")] Category Category)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Category Category)
         {
             if (id != Category.Id)
             {
@@ -128,7 +128,7 @@ namespace TestSolrApp.Controllers
         }
 
         // GET: Category/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Category == null)
             {
