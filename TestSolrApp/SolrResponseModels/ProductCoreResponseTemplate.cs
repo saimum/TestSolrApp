@@ -1,6 +1,6 @@
 ﻿namespace TestSolrApp.SolrResponseModels
 {
-    public class ProductRespnseModel
+    public class ProductCoreResponseTemplate
     {
         //Paste as JSON classes
         public class Rootobject
@@ -20,6 +20,7 @@
         {
             public string q { get; set; }
             public string indent { get; set; }
+            public string rows { get; set; }
             public string wt { get; set; }
         }
 
@@ -27,13 +28,14 @@
         {
             public int numFound { get; set; }
             public int start { get; set; }
-            public Doc[] docs { get; set; }
+            public List<Doc> docs { get; set; }
         }
 
         public class Doc
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public long _version_ { get; set; }
         }
 
     }
