@@ -22,7 +22,7 @@ namespace TestSolrApp.Controllers
                 //# Get Product
                 List<ProductCoreResponseTemplate.Doc> Products = new List<ProductCoreResponseTemplate.Doc>();
                 {
-                    HttpResponseMessage response = await client.GetAsync("ProductCore/select?q=*:*&rows=5&wt=json&indent=true");
+                    HttpResponseMessage response = await client.GetAsync("ProductCore/select?q=" + query + "&rows=5&wt=json&indent=true");
                     if (response.IsSuccessStatusCode)
                     {
                         var responseModel = await response.Content.ReadFromJsonAsync<ProductCoreResponseTemplate.Rootobject>();
@@ -36,7 +36,7 @@ namespace TestSolrApp.Controllers
                 //# Get Category
                 List<CategoryCoreResponseTemplate.Doc> Categories = new List<CategoryCoreResponseTemplate.Doc>();
                 {
-                    HttpResponseMessage response = await client.GetAsync("CategoryCore/select?q=*:*&rows=5&wt=json&indent=true");
+                    HttpResponseMessage response = await client.GetAsync("CategoryCore/select?q=" + query + "&rows=5&wt=json&indent=true");
                     if (response.IsSuccessStatusCode)
                     {
                         var responseModel = await response.Content.ReadFromJsonAsync<CategoryCoreResponseTemplate.Rootobject>();
