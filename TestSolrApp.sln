@@ -5,7 +5,13 @@ VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSolrApp", "TestSolrApp\TestSolrApp.csproj", "{6B05D98D-E655-49BC-B6C5-E55C03E56E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrManager", "SolrManager\SolrManager.csproj", "{709A0505-73FE-4ED3-A5EA-D3022867AD3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrManager", "SolrManager\SolrManager.csproj", "{709A0505-73FE-4ED3-A5EA-D3022867AD3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{013AED81-ACC3-4053-B823-8B91402F6A6B}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\COM-3829\Desktop\Solr Documentaitons\create a new core.txt = C:\Users\COM-3829\Desktop\Solr Documentaitons\create a new core.txt
+		C:\solr-8.11.2.zip = C:\solr-8.11.2.zip
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
